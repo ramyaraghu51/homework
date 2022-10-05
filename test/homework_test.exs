@@ -5,6 +5,7 @@ defmodule HomeworkTest do
 
   @last_name "Smith"
   @first_name "John"
+  @email "tester123@gmail.com" # Please test with an valid email id. I had locked my account testing this feature
   @url "https://m.facebook.com"
   @success_msg "We'll take you through a few steps to confirm your account on Facebook.."
 
@@ -14,7 +15,6 @@ defmodule HomeworkTest do
   end
 
   def fill_firstname_and_lastname_input_field(first_name,last_name) do
-    #firstname empty and lastname with a valid input
     first_name_element = find_element(:name, "firstname")
     element_displayed?(first_name_element)
     fill_field(first_name_element, first_name)
@@ -64,6 +64,30 @@ defmodule HomeworkTest do
     click(signup_button_field)
   end
 
+  def login_multiple_times(n) when n <= 1 do
+    # click(sign_in_field)
+    take_screenshot("login_attempt_failure.png")
+    raise "Can't move forward"
+  end
+
+  def login_multiple_times(n) do
+    email_id_field = find_element(:xpath, "//*[@id=\"m_login_email\"]")
+    fill_field(email_id_field, @email)
+    password_field = find_element(:xpath, "//*[@id=\"m_login_password\"]")
+    fill_field(password_field, 1234)
+    sign_in_field = find_element(:xpath, "//*[@id=\"login_password_step_element\"]/button")
+    click(sign_in_field)
+    try do
+      assert page_title() == "Facebook - log in or sign up"
+      login_multiple_times(n - 1)
+      :timer.sleep(100)
+    rescue
+      _ -> take_screenshot("login_attempt_page_new.png")
+    end
+
+  end
+
+  #Starts a hound session
   hound_session()
 
   @tag :account_creation_negative_test
@@ -72,6 +96,7 @@ defmodule HomeworkTest do
       navigate_to_login_page(@url) |> click()
       assert page_title() == "Join Facebook"
       assert visible_text(find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[3]/div[1]/span/span")) == "What's your name?"
+
       #firstname empty and last name with a valid input
       fill_firstname_and_lastname_input_field(nil,@last_name)
       alert_text = find_alert_message_field()
@@ -104,10 +129,11 @@ defmodule HomeworkTest do
     click(fb_new_account_page)
     fill_firstname_and_lastname_input_field(@first_name,@last_name)
     click_next_button_field()
-    # invalid date of birth
+
     try do
       date_of_birth_text = find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[4]/div[1]/span/div[1]", 10)
       assert visible_text(date_of_birth_text) == "What's your birthday?"
+      # invalid date of birth
       fill_date_of_birth_field(10,5,2)
       registration_error = find_element(:xpath, "//*[@id=\"registration-error\"]/div", 10)
       assert(visible_text(registration_error)=="It looks like you entered the wrong info. Please be sure to use your real birthday.")
@@ -133,7 +159,7 @@ defmodule HomeworkTest do
 
   @tag :single
   @tag :account_creation_negative_test
-  test "with invalid phone number" do
+  test "with empty phone number" do
     fb_new_account_page = navigate_to_login_page(@url)
     click(fb_new_account_page)
     fill_firstname_and_lastname_input_field(@first_name,@last_name)
@@ -141,11 +167,11 @@ defmodule HomeworkTest do
     :timer.sleep(1000)
     click_next_button_field()
 
-    #empty phone number
+
     try do
       assert(visible_text(find_element(:xpath, "//*[@id=\"contactpoint_step_title\"]/span", 10))
             == "Enter your phone number")
-      fill_contact_information(nil)
+      fill_contact_information(nil) #empty phone number
       click_next_button_field()
       alert_text = find_element(:id, "registration-error")
       assert visible_text(alert_text) == "Please enter a valid phone number."
@@ -156,7 +182,7 @@ defmodule HomeworkTest do
   end
 
   @tag :single
-  test "with valid phone number" do
+  test "with invalid phone number" do
     fb_new_account_page = navigate_to_login_page(@url)
     click(fb_new_account_page)
     fill_firstname_and_lastname_input_field(@first_name,@last_name)
@@ -165,15 +191,15 @@ defmodule HomeworkTest do
     click_next_button_field()
 
     try do
-      page_text = visible_text(find_element(:xpath, "//*[@id=\"contactpoint_step_title\"]/span", 10))
+      page_text = visible_text(find_element(:xpath, "//*[@id=\"contactpoint_step_title\"]/span", 15))
       assert(page_text == "Enter your phone number")
       #random phone number with 7 digits
       :timer.sleep(2000)
       fill_contact_information(1234567)
       click_next_button_field()
     rescue
-      error ->  take_screenshot("valid_phone_number_assertion_failure.png")
-      raise error
+      error ->  take_screenshot("invalid_phone_number_assertion_failure.png")
+                raise error
     end
   end
 
@@ -187,11 +213,12 @@ defmodule HomeworkTest do
     fill_contact_information(1234567)
     click_next_button_field()
 
-    #no input for gender
+
     :timer.sleep(400)
     try do
       assert(visible_text(find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[6]/div[1]/span"))
       == "What's your gender?")
+      #no input for gender
       next_button_field = find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[9]/div[2]/button[1]")
       click(next_button_field)
       alert_text = find_element(:id, "registration-error")
@@ -211,11 +238,10 @@ defmodule HomeworkTest do
     fill_contact_information(1234567)
     click_next_button_field()
 
-    #no input for gender
     :timer.sleep(400)
     assert(visible_text(find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[6]/div[1]/span"))
     == "What's your gender?")
-    #input for gender to proceed to next page
+    #valid input for gender to proceed to next page
     :timer.sleep(400)
     select_gender("Male")
     next_button_field = find_element(:xpath, "//*[@id=\"mobile-reg-form\"]/div[9]/div[2]/button[1]")
@@ -235,11 +261,12 @@ defmodule HomeworkTest do
     select_gender("Male")
     :timer.sleep(400)
     click_next_button_field()
-
+    :timer.sleep(400)
+    
     try do
-      assert(visible_text(find_element(:xpath, "//*[@id=\"password_step_title\"]/span", 10))
+      assert(visible_text(find_element(:xpath, "//*[@id=\"password_step_title\"]/span", 15))
       =="Choose a Password")
-      
+
       #empty input for password
       input_password(nil)
       :timer.sleep(400)
@@ -253,7 +280,6 @@ defmodule HomeworkTest do
   end
 
   @tag :account_creation_negative_test
-  @tag :failing_test
   test "with invalid input of 3 characters for password field" do
     fb_new_account_page = navigate_to_login_page(@url)
     click(fb_new_account_page)
@@ -264,23 +290,21 @@ defmodule HomeworkTest do
     click_next_button_field()
     :timer.sleep(400)
     select_gender("Male")
-    # :timer.sleep(1000)
-
     click_next_button_field()
-    # :timer.sleep(1000)
-    assert(visible_text(find_element(:xpath, "//*[@id=\"password_step_title\"]/span", 10))
-    == "Choose a Password")
+    :timer.sleep(400)
 
     #with alpahabets 3 characters
     try do
+      assert(visible_text(find_element(:xpath, "//*[@id=\"password_step_title\"]/span", 15))
+      == "Choose a Password")
       input_password("abc")
       signup()
       :timer.sleep(4000)
       assert visible_page_text() != "We'll take you through a few steps to confirm your account on Facebook.."
-      rescue
+    rescue
         error -> take_screenshot("password_assertion_failure_with_alphabets.png")
-        raise error
-      end
+                 raise error
+    end
   end
 
   @tag :account_creation_negative_test
@@ -292,7 +316,6 @@ defmodule HomeworkTest do
     click_next_button_field()
     fill_contact_information(1234567)
     click_next_button_field()
-
     :timer.sleep(400)
     select_gender("Male")
     click_next_button_field()
@@ -303,14 +326,21 @@ defmodule HomeworkTest do
 
     #with 6  numbers
     try do
-    input_password(123456)
-    signup()
-    :timer.sleep(4000)
-
-    assert visible_page_text() != @success_msg
+      input_password(123456)
+      signup()
+      :timer.sleep(4000)
+      assert visible_page_text() != @success_msg
     rescue
       error -> take_screenshot("password_assertion_failure_with_number.png")
-      raise error
+               raise error
     end
   end
+
+
+  @tag :account_sign_in
+  test "logging in with valid email and invalid password" do
+    navigate_to("https://m.facebook.com/")
+    login_multiple_times(25)
+  end
+
 end
