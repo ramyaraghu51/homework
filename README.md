@@ -15,20 +15,20 @@ In the config file, I set the config :hound, http: [{ "follow_redirect", false}]
     2.   Expected Result: Error message "It looks like you entered the wrong info. Please be sure to use your real birthday." 
     3.   Actual Result : Error message "It looks like you entered the wrong info. Please be sure to use your real birthday.
 
-Name :Invalid phone number
-Inputs : 1. Phone number field empty 2. Phone number with 7 digits.
-Expected Result: "Please enter a valid phone number" 
-Actual Result : "Please enter a valid phone number"
+3. Name :Invalid phone number
+    1.  Inputs : 1. Phone number field empty 2. Phone number with 7 digits.
+    2.  Expected Result: "Please enter a valid phone number" 
+    3.  Actual Result : "Please enter a valid phone number"
 
-Name : Invalid gender 
-Input : No gender is selected. 
-Expected Result : Please select your gender 
-Actual Result: Please select your gender.
+4. Name : Invalid gender 
+      1. Input : No gender is selected. 
+      2.Expected Result : Please select your gender 
+      3. Actual Result: Please select your gender.
 
-Name : Invalid password 
-Inputs : 1. Password field empty 2. Password with 3 characters less than the accepted limit. 
-Expected Result : " Enter a combination of at least six numbers, letters and punctuation marks (like ! and &)." 
-Actual Result : "Enter a combination of at least six numbers, letters and punctuation marks (like ! and &).")."
+5. Name : Invalid password 
+      1.   Inputs : 1. Password field empty 2. Password with 3 characters less than the accepted limit. 
+      2.   Expected Result : " Enter a combination of at least six numbers, letters and punctuation marks (like ! and &)." 
+      3.  Actual Result : "Enter a combination of at least six numbers, letters and punctuation marks (like ! and &).")."
  
 
 
