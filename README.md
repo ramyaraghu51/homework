@@ -10,10 +10,10 @@ In the config file, I set the config :hound, http: [{ "follow_redirect", false}]
   2. Expected Result : Error message "Please enter valid First name" or "Please enter valid last name" 
   3. Actual Result: Error message "Please enter valid First name" when first name field is nil" "Please enter valid last name" when last name field is nil."
 
-Name : Invalid date of birth Input: 
-Date of birth in future. For eg, Oct 5,2022.
-Expected Result: Error message "It looks like you entered the wrong info. Please be sure to use your real birthday." 
-Actual Result : Error message "It looks like you entered the wrong info. Please be sure to use your real birthday.
+2. Name : Invalid date of birth Input: 
+    1.  Date of birth in future. For eg, Oct 5,2022.
+    2.   Expected Result: Error message "It looks like you entered the wrong info. Please be sure to use your real birthday." 
+    3.   Actual Result : Error message "It looks like you entered the wrong info. Please be sure to use your real birthday.
 
 Name :Invalid phone number
 Inputs : 1. Phone number field empty 2. Phone number with 7 digits.
