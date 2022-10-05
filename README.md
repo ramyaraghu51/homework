@@ -3,10 +3,9 @@
 The tests focus on negative testing the account creation on facebook. I tried to login to https://www.facebook.com/, but facebook website stated that the current browser that I use in automation is not supported and kept on redirectine me to m.facebook.com. I took the following steps to avoid redirect.
 In the config file, I set the config :hound, http: [{ "follow_redirect", false}] http: [{ "follow_redirect", false}] and tried settin max forward to 1. None of the attempts to avoid redirect worked, So I have developed the test cases for account creation in m.facebook.com. 
 
-Test Cases
+## Test Cases
 
 1.Name : Invalid first name and last name.
-
   Input  : 1.first name field empty once with valid last name and
            2. last name field empty with valid first name.
           
