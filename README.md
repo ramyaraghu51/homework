@@ -28,7 +28,7 @@ Actual Result: Please select your gender.
 Name : Invalid password 
 Inputs : 1. Password field empty 2. Password with 3 characters less than the accepted limit. 
 Expected Result : " Enter a combination of at least six numbers, letters and punctuation marks (like ! and &)." 
-Actual Result : "Enter a combination of at least six numbers, letters and punctuation marks (like ! and &)."
+Actual Result : "Enter a combination of at least six numbers, letters and punctuation marks (like ! and &).")."
  
 
 
