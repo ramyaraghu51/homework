@@ -1,6 +1,6 @@
 ## Elixir SDET homework assignment
 
-The tests focus on negative testing the account creation on facebook. I tried to login to https://www.facebook.com/, but facebook website stated that the current browser that I use in automation is not supported and kept on redirecting me to m.facebook.com. I took the following steps to avoid redirect.
+The tests focus on negative testing the account creation on facebook. I tried to login to https://www.facebook.com/, but facebook website recognized that the current browser that I use in automation is not supported and kept on redirecting me to m.facebook.com. I took the following steps to avoid redirect.
 In the config file, I set the config :hound, http: [{ "follow_redirect", false}] http: [{ "follow_redirect", false}] and tried settin max forward to 1. None of the attempts to avoid redirect worked, So I have developed the test cases for account creation in m.facebook.com. 
 
 ## Test Cases
