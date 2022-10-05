@@ -6,9 +6,9 @@ In the config file, I set the config :hound, http: [{ "follow_redirect", false}]
 ## Test Cases
 
 1. Name : Invalid first name and last name. 
-  1. Input : 1.first name field empty once with valid last name and  2. last name field empty with valid first name.
-  2. Expected Result : Error message "Please enter valid First name" or "Please enter valid last name" 
-  3. Actual Result: Error message "Please enter valid First name" when first name field is nil" "Please enter valid last name" when last name field is nil."
+      1. Input : 1.first name field empty once with valid last name and  2. last name field empty with valid first name.
+      2. Expected Result : Error message "Please enter valid First name" or "Please enter valid last name" 
+      3. Actual Result: Error message "Please enter valid First name" when first name field is nil" "Please enter valid last name" when last name field is nil."
 
 2. Name : Invalid date of birth Input: 
     1.  Date of birth in future. For eg, Oct 5,2022.
