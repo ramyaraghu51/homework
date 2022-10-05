@@ -22,7 +22,7 @@ In the config file, I set the config :hound, http: [{ "follow_redirect", false}]
 
 4. Name : Invalid gender 
       1. Input : No gender is selected. 
-      2.Expected Result : Please select your gender 
+      2. Expected Result : Please select your gender 
       3. Actual Result: Please select your gender.
 
 5. Name : Invalid password 
