@@ -1,9 +1,10 @@
 ## Elixir SDET homework assignment
 
 The tests focus on negative testing the account creation on facebook. I tried to login to https://www.facebook.com/, but facebook website recognized that the current browser that I use in automation is not supported and kept on redirecting me to m.facebook.com. I took the following steps to avoid redirect.
-In the config file, I set the config :hound, http: [{ "follow_redirect", false}] http: [{ "follow_redirect", false}] and tried settin max forward to 1. None of the attempts to avoid redirect worked, So I have developed the test cases for account creation in m.facebook.com. 
+In the config file, I set the config :hound, http: [{ "follow_redirect", false}] and tried setting max_forward to 1. None of the attempts to avoid redirect worked, So I have developed the test cases for account creation using https:/m.facebook.com. 
 
 ## Test Cases
+
 
 1. Name : Invalid first name and last name. 
       1. Input : 1.first name field empty once with valid last name and  2. last name field empty with valid first name.
@@ -29,7 +30,19 @@ In the config file, I set the config :hound, http: [{ "follow_redirect", false}]
       1.   Inputs : 1. Password field empty 2. Password with 3 characters less than the accepted limit. 
       2.   Expected Result : " Enter a combination of at least six numbers, letters and punctuation marks (like ! and &)." 
       3.  Actual Result : "Enter a combination of at least six numbers, letters and punctuation marks (like ! and &).")."
- 
+
+### Screenshot
+
+I have also used the screen_shot feature when the tests fail their assertions. This ensures that when an unexpected behavior happens we can look at the screenshot to know the reason for failures. 
+
+### Retry
+
+I have used retrires option in find_element() calls to ensure that we can find the elements even if the page takes more time to load. There were few cases I have to still use sleep. With more due delligence I should be able to get rid of these sleeps. 
+
+### Tags
+
+All the negative test cases have been tagged as `:account_creation_negative_test` and multiple login attempt test as `:account_sign_in`. 
+
 
 
 ## Getting Up and Running
